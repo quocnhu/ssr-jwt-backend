@@ -1,0 +1,40 @@
+<!-- <div class="container">
+      <h3 class="mt-3">UPDATE USER</h3>
+      <form
+        class="border border-primary p-4"
+        method="POST"
+        action="/handleUpdateUser"
+      >
+        <div class="mb-3 mt-3 col-6">
+          <label for="email" class="form-label">Email address</label>
+          <input
+            value="<%=userUpdateUnique.email%>"
+            type="email"
+            class="form-control"
+            id="email"
+            aria-describedby="emailHelp"
+            name="email"
+            required
+          />
+        </div>
+        <div class="mb-3 col-6">
+          <label for="username" class="form-label">Username</label>
+          <input
+            value="<%=userUpdateUnique.username%>"
+            type="text"
+            class="form-control"
+            id="username"
+            name="username"
+            required
+          />
+        </div>
+        <input hidden name="id" value="<%=userUpdateUnique.id%>" />
+
+        <button type="submit" class="btn btn-primary">UPDATE</button>
+      </form>
+    </div> -->
+    ============================
+
+check user: user can not delete itself & need to have permission
+  nodejs can not get id 
+  react just write function to handle that problem
