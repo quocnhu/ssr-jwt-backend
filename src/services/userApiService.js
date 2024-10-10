@@ -4,12 +4,17 @@ const getAllUser = async () => {
   try {
     let users = await db.User.findAll({
       attributes: ["id", "username", "email", "phone", "sex"],
-      // include: { model: db.Group_, attributes: ["name","description"]},
+      include: { model: db.Group},
     });
     // let data = users.get({plain: true})
     // let users = await db.Group_.findAll({attributes: ["name","description"]})
     // console.log("check--------------------11-", users)
-
+    // let users = await db.User.findAll({
+    //   raw: true,
+    //   include: {model: db.GroupN}
+    // });
+    // let users = await db.User.findAll();
+    //  let users = await db.GroupN.findAll();
     if (users) {
       return {
         EM: "get data successfully",
@@ -39,8 +44,10 @@ const getUserWithPagination = async (page, limit) => {
       offset: offset,
       limit: limit,
       attributes: ["id", "username", "email", "phone", "sex"],
-      // include: { model: db.Group_, attributes: ["name","description"]},
+      include: { model: db.Group}, 
+    
       //a-z
+
     });
     let totalPages = Math.ceil(count / limit);
     //
@@ -49,7 +56,7 @@ const getUserWithPagination = async (page, limit) => {
       totalPages: totalPages,
       users: rows,
     };
-    console.log("=======check data ======", data);
+    // console.log("=======check data ======", data);
     return {
       EM: "Fetching is ok",
       EC: 0,

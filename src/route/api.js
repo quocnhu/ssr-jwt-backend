@@ -1,5 +1,6 @@
 import {testApi,handleRegister,handleLogin} from '../controller/apiController.js'
 import {ReadFunc, CreateFunc, UpdateFunc, DeleteFunc} from '../controller/userController.js'
+import {readFuncGroup} from '../controller/groupController.js'
 import express from 'express';
 const router = express.Router();
 
@@ -13,7 +14,8 @@ const initApiRoutes = (app) => {
     router.post("/user/create",CreateFunc)
     router.put("/user/update",UpdateFunc)
     router.delete("/user/delete",DeleteFunc)
-
+    
+    router.get("/group/read", readFuncGroup)
     return (app.use("/api/v1/", router))
 }
 
