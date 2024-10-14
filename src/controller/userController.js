@@ -34,6 +34,25 @@ const ReadFunc = async (req,res) => {
 
 }
 const CreateFunc = async(req,res) => {
+    try {
+        //validation as needed (*)
+        // console.log("Check data ====> create", req.body)
+        let data = await createNewUser(req.body)
+        
+        return res.status(200).json({
+            EM: data.EM,
+            EC: data.EC,
+            DT: data.DT, 
+        })
+    }
+    catch (e) {
+        console.log(e)
+        return res.status(500).json({
+            EM: 'error from server',
+            EC: '-1',
+            DT:'', 
+        })
+    }
  
 }
 const UpdateFunc = async(req,res) => {

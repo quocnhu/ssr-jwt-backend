@@ -38,3 +38,6 @@
 check user: user can not delete itself & need to have permission
   nodejs can not get id 
   react just write function to handle that problem
+
+  ===========================
+  sequelize: order also impacts on migration
