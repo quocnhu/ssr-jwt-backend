@@ -57,3 +57,5 @@ check user: user can not delete itself & need to have permission
     ===> await db.User.create({
       ...data, password: hashedPassword
     })
+
+    inherent.
