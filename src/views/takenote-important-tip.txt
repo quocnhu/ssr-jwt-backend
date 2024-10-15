@@ -41,3 +41,19 @@ check user: user can not delete itself & need to have permission
 
   ===========================
   sequelize: order also impacts on migration
+
+
+  ================================
+
+      //create new user
+    await db.User.create({
+      email: data.email,
+      phone: data.phone,
+      username: data.username,
+      password: hashedPassword,
+      address: data.address,
+    });
+
+    ===> await db.User.create({
+      ...data, password: hashedPassword
+    })

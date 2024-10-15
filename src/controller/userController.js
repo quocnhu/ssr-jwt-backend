@@ -56,6 +56,24 @@ const CreateFunc = async(req,res) => {
  
 }
 const UpdateFunc = async(req,res) => {
+    try {
+        //validation as needed (*)
+        // console.log("Check data ====> update", req.body)
+        let data = await updateUser(req.body)
+        return res.status(200).json({
+            EM: data.EM,
+            EC: data.EC,
+            DT: data.DT, 
+        })
+    }
+    catch (e) {
+        console.log(e)
+        return res.status(500).json({
+            EM: 'error from server',
+            EC: '-1',
+            DT:'', 
+        })
+    }
 
 }
 const DeleteFunc = async (req,res) => {

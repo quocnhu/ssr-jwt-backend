@@ -112,5 +112,3 @@ const updateUser = async (id, email, username) => {
 
 export { createNewUser, deleteUser, getUserList, getIdUserUpdate, updateUser };
 
-// let check = bcrypt.compareSync(password, hashPassword)
-// console.log(`>>>check`, check)

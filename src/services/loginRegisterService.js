@@ -112,4 +112,4 @@ const handleUserLogin = async (rawData) => {
       };
     }
   } 
-export { registerNewUser, handleUserLogin };
+export { registerNewUser, handleUserLogin, hashUserPassword,checkEmailExist, checkPhoneExist};

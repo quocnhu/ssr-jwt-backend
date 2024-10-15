@@ -1,20 +1,16 @@
 import db from "../models/index.js";
-
+import {
+  hashUserPassword,
+  checkEmailExist,
+  checkPhoneExist,
+} from "../services/loginRegisterService.js";
 const getAllUser = async () => {
   try {
     let users = await db.User.findAll({
       attributes: ["id", "username", "email", "phone", "sex"],
-      include: { model: db.Group},
+      include: { model: db.Group, attributes: ["id", "name", "description"] },
     });
     // let data = users.get({plain: true})
-    // let users = await db.Group_.findAll({attributes: ["name","description"]})
-    // console.log("check--------------------11-", users)
-    // let users = await db.User.findAll({
-    //   raw: true,
-    //   include: {model: db.GroupN}
-    // });
-    // let users = await db.User.findAll();
-    //  let users = await db.GroupN.findAll();
     if (users) {
       return {
         EM: "get data successfully",
@@ -37,16 +33,16 @@ const getAllUser = async () => {
     };
   }
 };
+//PAGINATION HANDLING ON DB
 const getUserWithPagination = async (page, limit) => {
   try {
     let offset = (page - 1) * limit;
     let { count, rows } = await db.User.findAndCountAll({
       offset: offset,
       limit: limit,
-      attributes: ["id", "username", "email", "phone", "sex"],
-      include: { model: db.Group}, 
-    
-      //a-z
+      attributes: ["id", "username", "email", "phone", "sex", "address"],
+      include: { model: db.Group, attributes: ["id", "name", "description"] },
+      order: [["id", "DESC"]],
 
     });
     let totalPages = Math.ceil(count / limit);
@@ -71,13 +67,36 @@ const getUserWithPagination = async (page, limit) => {
     };
   }
 };
+
 const createNewUser = async (data) => {
   try {
-    await db.User.create(data);
+    //CHECK EMAIL, PHONE, PASSWORD EXISTED ON MODAL CREATE USER;
+    let isEmailExist = await checkEmailExist(data.email);
+    if (isEmailExist === true) {
+      return {
+        EM: "Email already exists",
+        EC: 1,
+      };
+    }
+    let isPhoneExist = await checkPhoneExist(data.phone);
+    if (isPhoneExist === true) {
+      return {
+        EM: "Phone already exists",
+        EC: 1,
+      };
+    }
+    //hash password
+    let hashedPassword = await hashUserPassword(data.password);
+    //create new user
+    await db.User.create({
+      ...data,
+      password: hashedPassword,
+    });
+    // return success message
     return {
       EM: "User created",
       EC: 0,
-      DT: []
+      DT: [],
     };
   } catch (e) {
     console.log(e);
@@ -103,10 +122,11 @@ const updateUser = async (data) => {
     console.log(e);
   }
 };
+// DELETE MODAL HANDLING 
 const deleteUser = async (id) => {
   try {
     let user = await db.User.findOne({
-      where: { id:id }, //left = sequelize
+      where: { id: id }, //left = sequelize
     });
     if (user) {
       await user.destroy();
