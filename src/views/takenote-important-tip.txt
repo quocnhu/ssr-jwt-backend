@@ -68,3 +68,23 @@ check user: user can not delete itself & need to have permission
         sex: data.sex,
         groupId: data.groupId
       })} ===> because of "disable" attribute ==> so we must tighten essential items, to avoid hacker disables it 
+========Authentication========
+by: JWT and cookie-parser
+
+==============================
+ "development": {
+    "username": "root",
+    "password": "p@ssw0rdN",
+    "database": "jwt",
+    "host": "localhost",
+    "dialect": "mysql",
+    "logging": false,  // show query in database or not 
+    "port": 3308
+  },
+==============================
+by default brower blocks token ==> we need to set credential for it right on axios server for this project 
+
+
+PORT_SERVER = 1995;
+REACT_URL = http://localhost:3000
+JWT_SECRET = nguyenquocnhuit

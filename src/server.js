@@ -1,7 +1,4 @@
 /**ES6*/ 
-// import dotenv from 'dotenv';
-// const dotenv = require('dotenv')
-require('dotenv').config()
 import express from 'express';
 const app = express()
 import bodyParser from 'body-parser';
@@ -10,8 +7,14 @@ import configViewEngine from './config/viewEngine.js'
 import initWebRoutes from './route/web.js'
 import initApiRoutes from './route/api.js'
 import {configCors} from './config/cors.js'
-import {poolsql} from '../src/config/db.js'
-import connection from '../src/config/connectDbSequelize.js'
+import {poolsql} from './config/db.js'
+import connection from './config/connectDbSequelize.js'
+import cookieParser from 'cookie-parser'
+require('dotenv').config()
+// require('dotenv').config({ path: '../.env' })
+// dotenv.config()
+// console.log('check dotenv>>>>>>>', process.env)
+
 //Initializing CORS
 configCors(app)
 //Initializing config
@@ -21,8 +24,8 @@ configViewEngine(app);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//Initializing dotenv
-// console.log("check env>>>", process.env)
+//Config CookieParser
+app.use(cookieParser())
 
 //Initializing route
 initWebRoutes(app)
@@ -37,7 +40,7 @@ poolsql.getConnection((err, connection) => {
   }
 });
 connection()
-const port = process.env.PORT || 1176
+const port = process.env.PORT_SERVER || 1176
 app.listen(port, () => {
   console.log(`>>>SERVER BACKEND JWT IS LISTENING PORT: ${port}`)
 })

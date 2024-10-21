@@ -5,6 +5,7 @@
     "database": "jwt",
     "host": "localhost",
     "dialect": "mysql",
+    "logging": false, 
     "port": 3308
   },
   "test": {
@@ -22,3 +23,4 @@
     "dialect": "mysql"
   }
 }
+

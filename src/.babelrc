@@ -2,3 +2,11 @@
   "presets": ["@babel/preset-env"],
   "plugins": ["@babel/plugin-transform-modules-commonjs"]
 }
+// {
+//   "presets": ["@babel/preset-env"], //handling import and require syntax
+//   "plugins": [
+//     ["babel-plugin-dotenv", {
+//       "replacedModuleName": "dotenv"
+//     }]
+//   ],
+// }

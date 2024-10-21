@@ -1,5 +1,7 @@
 import db from "../models/index.js";
 import { Op } from "sequelize";
+import {getGroupWithRoles} from '../services/JWTservice.js';
+import {createJWT} from '../middleware/JWTAction.js'
 //Encrypting password
 import bcrypt from "bcryptjs";
 const salt = bcrypt.genSaltSync(10);
@@ -60,6 +62,7 @@ const registerNewUser = async (rawUserData) => {
       phone: rawUserData.phone,
       username: rawUserData.username,
       password: hashPassword,
+      groupId: 4 //set static for guest view only
     });
     //return success message
     return {
@@ -91,10 +94,22 @@ const handleUserLogin = async (rawData) => {
     if (user) {
       let isCorrectPassword = checkPassword(rawData.password, user.password);
       if (isCorrectPassword === true) {
+
+        //=====HANDLING TOKEN COOKIE======
+        let groupWithRoles = await getGroupWithRoles(user)
+        let payload = {
+          email: user.email,
+          groupWithRoles,
+        }
+        let token = createJWT(payload)
+        // console.log("Check token >>>>>>> backend >>>>>>>>>>>>>>>>>",token)
         return {
-          EM: "Ok",
+          EM: "Ok!",
           EC: "0",
-          DT: "",
+          DT: {
+            access_token: token,
+            groupWithRoles
+          },
         };
       }} 
      //else
